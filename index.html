@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Jose the text - advice</title>
+    <link rel="shortcut icon" href="jose.png" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(17, 17, 18);
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            cursor: pointer;
+            border: 5px solid #111112;
+            border-radius: 6rem;
+            outline: 2px solid #4aff24;
+            animation: colorChange 4s ease infinite;
+            animation: rotate 60s infinite;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        #jos {
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            cursor: pointer;
+            transition: opacity 0.4s ease;
+            user-select: none;
+            animation: fadeUp 1s ease-out;
+            width: 70%;
+    text-align: center;
+        }
+        @media (max-width:600px){
+            #jos{
+                font-size: 18px;
+            }
+        }
+        @media (max-width:300px){
+            #jos{
+                font-size: 16px;
+            }
+        }
+        @keyframes colorChange {
+            0% { box-shadow: 0 0 50px #9600007e; }
+            25% { box-shadow: 0 0 50px #ba640883; }
+            50% { box-shadow: 0 0 50px #9600004a; }
+            75% { box-shadow: 0 0 50px #97720e85; }
+            100% { box-shadow: 0 0 50px #b70707af; }
+        }
+        @keyframes fade{
+            0%{opacity: 0; transform: translateY(4px);}
+            50%{opacity: 100%; transform: none;}
+            100%{opacity: 0; transform: translateY(4px);}
+        }
+                @keyframes fadeUp{
+            from{opacity: 0; transform: translateY(4px);}
+            to{opacity: 100%; transform: none;}
+        }
+        @keyframes rotate{
+            from{transform: rotate(0deg);}
+            to{transform: rotate(360deg);}
+        }
+        .musicPlayer {
+    display: flex;
+    position: fixed;
+    bottom: 32px;
+    align-items: center;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    padding: 6px 6px;
+    border-radius: 6px;
+    max-width: 300px;
+    box-shadow: 0 0 32px #ffffff3b;
+
+}
+a{
+    color: rgb(96, 96, 96);
+}
+
+.musicPlayer img {
+    animation: none;
+    border: none;
+    outline: none;
+    width: 55px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.musicPlayer .info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.musicPlayer button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px;
+    user-select: none;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.musicPlayer button:hover {
+    color: #000;
+}
+iconify-icon{
+        color: #383838;
+    padding: 11px 17px;
+}
+
+    </style>
+</head>
+
+
+<body>
+    <main style="width: 100%;">
+        <img id="img" onclick="jos()" height="160px" src="jose.png" alt="icon" />
+        <p id="jos" onclick="jos()">Hi, I'm Jose. <br>Click me for advice.</p>
+    </main>
+
+ <span class="musicPlayer">
+    <img src="cover.jpg" alt="cover" />
+    <span class="info">
+        <p style="margin-top: 4px; font-size: 14px;">We will meet again.</p>
+        <p style="margin-top: -13px; font-size: 8px;">by <a href="https://open.spotify.com/artist/0dOsUmRuQ52Tp8sEG10vjt">Invadable Harmony</a></p>
+    </span>
+    <iconify-icon style="cursor: pointer;" id="playPauseBtn" icon="mdi:play" width="24"></iconify-icon>
+    <audio id="audio" src="WWMA.mp3"></audio>
+</span> 
+
+
+
+
+
+
+
+
+<script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+<script src="joseQuotes.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+
+    playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.setAttribute('icon', 'mdi:pause');
+        } else {
+            audio.pause();
+            playPauseBtn.setAttribute('icon', 'mdi:play');
+        }
+    });
+});
+
+
+    let unusedSuggestions = [...darkFacts];
+    function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+// دسترسی به آرایه جملات
+async function jos() {
+  if (unusedSuggestions.length === 0) {
+    unusedSuggestions = [...darkFacts];
+  }
+  const imgEl = document.getElementById("img");
+  const josEl = document.getElementById("jos");
+
+  imgEl.style.outline = "2px solid rgb(190, 126, 48)";
+  josEl.innerText = "...";
+  josEl.style.animation = "fade 2s ease-out infinite";
+  await wait(2000);
+  josEl.style.animation = "none";
+
+  const index = Math.floor(Math.random() * unusedSuggestions.length);
+  const sentence = unusedSuggestions.splice(index, 1)[0];
+
+  josEl.innerText = sentence;
+  imgEl.style.outline = "2px solid #4aff24";
+
+  // Force reflow to restart animation
+  void josEl.offsetWidth;
+  josEl.style.animation = "fadeUp 1s ease-out";
+}
+
+
+</script>
+
+
+</body>
+</html>
